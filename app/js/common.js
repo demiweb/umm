@@ -197,6 +197,100 @@ scrollAnimations();
 //
 
 
+var burger = [...document.querySelectorAll('.burger')];
+var header = document.querySelector('.header');
+
+
+function burgerControl() {
+    if (burger.length) {
+        burger.forEach((btn) => {
+
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                header.classList.toggle('active');
+                document.body.classList.toggle('no-scroll')
+
+            })
+        })
+    }
+}
+
+burgerControl();
+
+function ifHaveShips() {
+    if (document.querySelector('.page-section')) {
+        const sections = document.querySelectorAll(".page-section");
+        const menuItems = document.querySelectorAll(".menu li a");
+
+
+        sections.forEach((sec, index) => {
+            let top = window.scrollY;
+            let offset = sec.offsetTop;
+            let height = sec.offsetHeight;
+            let id = sec.getAttribute('id');
+
+            if (top >= offset - 100 && top < offset + height - 100) {
+                const target = document.querySelector(`[href='#${id}']`);
+                activeLink(target);
+            } else {
+            }
+        });
+        function onScroll2() {
+            var scrollPos = $(document).scrollTop();
+
+            window.onscroll = () => {
+                sections.forEach((sec, index) => {
+                    let top = window.scrollY;
+                    let offset = sec.offsetTop;
+                    let height = sec.offsetHeight;
+                    let id = sec.getAttribute('id');
+
+                    if (top >= offset - 200 && top < offset + height - 100) {
+                        const target = document.querySelector(`[href='#${id}']`);
+                        activeLink(target);
+
+                    } else {
+                    }
+                })
+            };
+        }
+        function activeLink(li) {
+            menuItems.forEach((item) => item.classList.remove('active'));
+
+            if (li) {
+                li.classList.add('active');
+            }
+
+        }
+
+
+        onScroll2();
+        $(document).on("scroll", onScroll2);
+// Get all sections that have an ID defined
+
+
+// Add an event listener listening for scroll
+        menuItems.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let link = btn.getAttribute("href");
+
+                header.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                burger.forEach((burg) => {
+                    burg.classList.remove('active');
+                });
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $(link).offset().top - $('.header .logo').outerHeight(true)
+                }, 600);
+            })
+        });
+    }
+}
+
+ifHaveShips();
+
+
 const horizontalParallax = document.querySelectorAll('.rellax-v');
 
 // $('.rellax-v').paroller();
